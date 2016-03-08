@@ -1,0 +1,10 @@
+welcome: "Welcome to Calculator! Enter your name:"
+valid_name: "Make sure to end a valid name."
+first: "Whats the first number"
+second: "Whats the 2nd number"
+ops_prompt: 
+  "Whats the operator \n
+    1) add \n
+    2) subtract \n
+    3) divide \n
+    4) multiply"

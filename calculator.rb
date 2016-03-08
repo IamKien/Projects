@@ -1,29 +1,44 @@
+require 'yaml'
+MESSAGES = YAML.load_file('calculator.yml')
+MESSAGES.inspect
+
 def prompt(message)
   Kernel.puts("=> #{message}")
 end
 
-def valid_number?(num)
-  num.to_i() != 0
+def ops_to_message(ops)
+  word = case ops
+    when '1'
+      'Adding'
+    when '2'
+      'Subtract'
+    when '3'
+      'Divide'
+    when '4'
+      'Multiply'
+    end
+  x = "___________"
+  word
 end
 
-def ops_to_message(ops)
-  case ops
-  when '1'
-    'Adding'
-  when '2'
-    'Subtract'
-  when '3'
-    'Divide'
-  when '4'
-    'Multiply'
-  end
+def integer?(input)
+  input.to_i.to_s == input
 end
+
+def float?(input)
+  input.to_f.to_s == input
+end
+
+def number?(input)
+  integer?(input) || float?(input)
+end
+
 
 number1 = ''
 number2 = ''
 
 
-prompt("Welcome to calculator")
+prompt(MESSAGES['welcome'])
 
 name = ''
 
@@ -32,7 +47,7 @@ loop do
   name = Kernel.gets().chomp()
 
   if name.empty?()
-    prompt("Type your name")
+    prompt(MESSAGES['valid_name'])
   else
     break
   end
@@ -42,10 +57,10 @@ prompt("Hi #{name}")
 
 loop do
   loop do
-    prompt("Whats the first number")
-    number1 = Kernel.gets().chomp().to_i
+    prompt(MESSAGES['first'])
+    number1 = Kernel.gets().chomp()
 
-    if valid_number?(number1)
+    if number?(number1)
       break
     else
       prompt("Not a number")
@@ -53,10 +68,10 @@ loop do
   end
 
   loop do
-    prompt("Whats the 2nd number")
-    number2 = Kernel.gets().chomp().to_i
+    prompt(MESSAGES['second'])
+    number2 = Kernel.gets().chomp()
 
-    if valid_number?(number2)
+    if number?(number2)
       break
     else
       prompt("Not a number")
@@ -65,15 +80,7 @@ loop do
 
   ops = ''
 
-  ops_prompt = <<-MSG
-  "Whats the operator 
-    1) add 
-    2) subtract 
-    3) divide 
-    4) multiply"
-  MSG
-
-  prompt(ops_prompt)
+  prompt(MESSAGES['ops_prompt'])
   loop do
     ops = Kernel.gets().chomp()
 
@@ -88,13 +95,13 @@ loop do
 
   result = case ops
      when '1'
-      result = number1 + number2
+      result = number1.to_f + number2.to_f
      when '2'
-      result = number1 - number2
+      result = number1.to_f - number2.to_f
      when '3'
       result = number1.to_f / number2.to_f
      when '4'
-      result = number1 * number2
+      result = number1.to_f * number2.to_f
   end
 
   prompt("Your answer is #{result}")
