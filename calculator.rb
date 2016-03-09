@@ -80,7 +80,15 @@ loop do
 
   ops = ''
 
-  prompt(MESSAGES['ops_prompt'])
+  ops_prompt = <<-MSG
+  "Whats the operator 
+    1) add 
+    2) subtract 
+    3) divide 
+    4) multiply"
+  MSG
+
+  prompt(ops_prompt)
   loop do
     ops = Kernel.gets().chomp()
 
