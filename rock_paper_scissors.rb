@@ -44,19 +44,8 @@ def display_results(player, computer)
   end
 end
 
-def keep_score(player, computer)
-  player = player.to_i
-  computer = computer.to_i
-  if win?(player, computer)
-    player += 1
-    prompt("#{player}")
-  elsif win?(computer, player)
-    computer += 1
-    prompt("#{computer}")
-  else
-    prompt("No points for both")
-  end
-end
+player_score = 0
+computer_score = 0
 
 loop do
   choice = ''
@@ -82,15 +71,36 @@ loop do
 
   computer_choice = VALID_CHOICES.sample
 
-  prompt("You choose #{choice}, Computer choose #{computer_choice}")
 
+
+  if win?(choice, computer_choice)
+    player_score += 1
+  elsif win?(computer_choice, choice)
+    computer_score += 1
+  else
+
+  end
+
+  if player_score >= 3
+    prompt("You won 3 in a row!")
+    break
+  elsif computer_score >= 3
+    prompt("Computer won 3 in a row")
+    break
+  end
+    
+  
+
+  prompt("You choose #{choice}, Computer choose #{computer_choice}")
+  prompt("You have #{player_score}, Computer have #{computer_score}")
   display_results(choice, computer_choice)
-  keep_score(choice, computer_choice)
+
 
   prompt("Do you want to play again?")
   answer = Kernel.gets().chomp()
-
+ 
   break unless answer.downcase().start_with?('y')
+
 end
 
 prompt("Thank you for playing!!!!!")
